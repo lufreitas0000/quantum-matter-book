@@ -1,0 +1,90 @@
+\section{The Su-Schrieffer-Heeger (SSH) Model}
+\label{sec:ssh_model}
+
+We now turn to the first concrete physical realization of the mathematical ideas we have developed.
+The Su-Schrieffer-Heeger (SSH) model is a simple toy model of a one-dimensional crystal, originally proposed to describe the polymer polyacetylene.
+Despite its simplicity, it contains all the essential ingredients of a topological insulator and provides a perfect illustration of the index theorem at work.
+
+The model describes electrons hopping along a 1D chain of atoms.
+The crucial feature is that the chain is \textit{dimerized}, meaning the hopping strengths between adjacent sites are staggered.
+Let the hopping amplitude inside a unit cell be $v$, and the hopping amplitude between unit cells be $w$.
+Each unit cell contains two sites, which we label A and B.
+
+\begin{figure}[htbp]
+    \centering
+    \input{chapter1/figures/tikz_ssh_model.tex}
+    \caption{The two dimerization patterns of the SSH chain. (a) The trivial phase, where the intra-cell hopping $v$ is stronger than the inter-cell hopping $w$. (b) The topological phase, where the inter-cell hopping $w$ is stronger, leading to the formation of robust zero-energy states at the boundaries (red dots).}
+    \label{fig:ssh_dimerization}
+\end{figure}
+
+Using a tight-binding approximation, the Hamiltonian for the system can be written in terms of creation and annihilation operators on each site.
+Because the system is periodic, it is natural to work in momentum space.
+After a Fourier transform, the Hamiltonian becomes a $2 \times 2$ matrix for each momentum $k$ in the first Brillouin zone, $k \in [-\pi, \pi)$.
+This matrix acts on a two-component spinor $(\psi_A(k), \psi_B(k))^T$, where the components represent the electron amplitude on the A and B sublattices.
+The momentum-space Hamiltonian is:
+\begin{equation}
+    H(k) = \begin{pmatrix} 0 & v + w e^{-ik} \\ v + w e^{ik} & 0 \end{pmatrix}
+\end{equation}
+This matrix can be conveniently expressed as a linear combination of the Pauli matrices, $H(k) = \vec{d}(k) \cdot \vec{\sigma} = d_x(k)\sigma_x + d_y(k)\sigma_y$, where:
+\begin{align}
+    d_x(k) &= v + w \cos(k) \\
+    d_y(k) &= w \sin(k) \\
+    d_z(k) &= 0
+\end{align}
+The energy eigenvalues are given by $E(k) = \pm |\vec{d}(k)| = \pm\sqrt{(v+w\cos k)^2 + (w\sin k)^2}$.
+The system has an energy gap for all $k$ as long as the vector $\vec{d}(k)$ never vanishes.
+This occurs as long as $v \neq w$.
+
+The vector $\vec{d}(k) = (d_x(k), d_y(k))$ defines a path in the plane as the momentum $k$ traverses the Brillouin zone from $-\pi$ to $\pi$.
+This path is precisely the \textbf{symbol} of the Hamiltonian.
+The topology of our system is entirely encoded in the winding number of this path around the origin.
+
+Let's analyze the two distinct cases, as shown in Figure \ref{fig:ssh_dimerization}.
+\begin{itemize}
+    \item \textbf{Trivial Phase ($|v| > |w|$):} The path traced by $\vec{d}(k)$ is a circle of radius $w$ centered at $(v, 0)$. Since $|v|>|w|$, this circle does not enclose the origin. The winding number is $\text{wind}(\vec{d}, 0) = 0$. The system is topologically trivial.
+    \item \textbf{Topological Phase ($|v| < |w|$):} The path is again a circle of radius $w$ centered at $(v,0)$. Now, since $|w|>|v|$, the origin is inside the circle. The path encloses the origin, and its winding number is $\text{wind}(\vec{d}, 0) = 1$. The system is in a non-trivial topological phase.
+\end{itemize}
+
+What is the physical consequence of this non-zero winding number?
+The index theorem provides the answer.
+The winding number of the symbol of the Hamiltonian ($n=1$) is directly related to the Fredholm index of an associated Dirac operator.
+A non-zero index predicts the existence of zero-energy states.
+But where do these states live?
+In a finite chain, a non-trivial winding number for the bulk material forces the existence of robust, zero-energy states localized at the boundaries of the chain.
+These are the famous \textbf{edge states} of the topological insulator.
+In the trivial phase ($n=0$), the index is zero, and no such protected edge states exist.
+
+The SSH model is the quintessential example of the \textit{bulk-boundary correspondence}.
+A topological property of the bulk Hamiltonian (the winding number) dictates a physical property at the boundary (the number of zero-energy states).
+This correspondence is the defining feature of topological phases of matter.
+The edge states are protected by the topology of the bulk; one cannot remove them by any local perturbation (like changing $v$ or $w$ slightly) without closing the energy gap and destroying the topological phase itself.
+
+\subsection*{Exercises}
+\begin{exercise}[Edge States in the Open SSH Chain]
+    Consider a finite SSH chain with $N$ unit cells (and thus $2N$ sites), with open boundary conditions. The real-space Schrödinger equation $H\psi = E\psi$ can be written as a set of coupled equations for the wavefunction amplitudes on the A and B sites of the $j$-th unit cell, denoted $\psi_{j,A}$ and $\psi_{j,B}$:
+    \begin{align*}
+        v \psi_{j,B} + w \psi_{j-1, B} &= E \psi_{j,A} \\
+        v \psi_{j,A} + w \psi_{j+1, A} &= E \psi_{j,B}
+    \end{align*}
+    In the topological phase ($|v| < |w|$), find the zero-energy ($E=0$) solutions and show that they are localized at the edges of the chain. How does the energy of these states behave for a large but finite chain?
+\end{exercise}
+
+\begin{solution}
+    We look for solutions with exactly zero energy, $E=0$. The coupled equations simplify to:
+    $v \psi_{j,B} + w \psi_{j-1, B} = 0$ and $v \psi_{j,A} + w \psi_{j+1, A} = 0$. 
+    These are recursion relations. The first equation relates B-sites and tells us that $\psi_{j,B} = (-v/w) \psi_{j-1, B}$. The second equation relates A-sites, giving $\psi_{j+1,A} = (-v/w) \psi_{j,A}$.
+    
+    Let's try to construct a solution.
+    Consider the state localized at the left edge ($j=1$). The boundary condition means there is no site $\psi_{0,B}$. For the first equation ($j=1$) to hold, we must have $v\psi_{1,B} = 0$. Since $v \neq 0$, this forces $\psi_{1,B}=0$. Applying the recursion relation $\psi_{j,B} = (-v/w) \psi_{j-1, B}$ for all subsequent sites gives $\psi_{j,B}=0$ for all $j$. This means the zero-energy state must have its amplitude entirely on the A-sublattice.
+    
+    Now consider the second recursion relation, $\psi_{j+1,A} = (-v/w) \psi_{j,A}$. Let's assume there is some non-zero amplitude on the first A-site, $\psi_{1,A} = c$. Then the amplitudes on the other A-sites are given by:
+    \begin{equation*}
+        \psi_{j,A} = c \left(-\frac{v}{w}\right)^{j-1}
+    \end{equation*}
+    In the topological phase, $|v/w| < 1$, so this wavefunction decays exponentially as we move from the left edge into the bulk. It is an \textbf{edge state}.
+    
+    A similar argument can be made for the right edge. The open boundary condition at $j=N$ means there is no $\psi_{N+1,A}$. The second equation for $j=N$ becomes $v\psi_{N,A}=0$, which forces $\psi_{N,A}=0$ and all other $\psi_{j,A}=0$. This means the second edge state must live entirely on the B-sublattice. Its wavefunction is found to be $\psi_{j,B} = c'(-v/w)^{N-j}$, which is localized at the right edge ($j=N$).
+    
+    For a finite chain, these two states, one on the left and one on the right, are not exactly at zero energy. Their wavefunctions have small but finite tails that overlap in the middle of the chain. This hybridization splits their degeneracy, creating two states with energies $E_\pm \approx \pm |v|(-v/w)^{N-1}$.
+    The energy splitting is exponentially small in the system size $N$. In the thermodynamic limit ($N \to \infty$), the states become perfectly localized, their overlap vanishes, and their energies converge to exactly zero. This demonstrates the robustness of the zero-energy edge modes predicted by the bulk's topological winding number.
+\end{solution}

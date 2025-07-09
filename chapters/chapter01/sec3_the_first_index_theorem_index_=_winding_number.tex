@@ -1,0 +1,99 @@
+\section{The First Index Theorem: Index = Winding Number}
+\label{sec:first_index_theorem}
+
+We have now arrived at a critical juncture.
+In the first section, we found a topological invariant: the winding number of a continuous map from the circle to itself.
+In the second, we found an analytical invariant: the Fredholm index of an operator acting on an infinite-dimensional space.
+Both are integers, and both are stable under small, continuous deformations of the underlying system.
+The natural question arises: are these two numbers related?
+
+The answer is a resounding yes, and their equality is the simplest manifestation of one of the most profound results in modern mathematics, the Atiyah-Singer Index Theorem.
+We can state this first version of the theorem using the Toeplitz operator.
+
+Let us recall the setup.
+We begin with the Hilbert space $L^2(S^1)$ of all square-integrable functions on the circle, whose standard orthonormal basis is the Fourier basis $\{e^{in\theta}\}_{n\in\mathbb{Z}}$.
+A key step is to split this space into two parts.
+The \textbf{Hardy space}, denoted $H^2$, is the subspace of $L^2(S^1)$ consisting of functions with only non-negative Fourier frequencies.
+A function $f(\theta) = \sum_{n\in\mathbb{Z}} c_n e^{in\theta}$ is in $H^2$ if and only if $c_n = 0$ for all $n < 0$.
+This decomposition is fundamental in physics, often corresponding to a split between positive and negative energy states (or particle and anti-particle states).
+We then let $P$ be the orthogonal projection operator that maps any function in $L^2(S^1)$ to its non-negative frequency part in $H^2$.
+
+By forcing our operator to map the space of "positive energy" states to itself, we introduce a crucial structure.
+The operator is built from two steps: first, multiplication by a function $\phi$, and second, projection back into the original space $H^2$.
+The multiplication step, $f \mapsto \phi \cdot f$, can take a function with only non-negative frequencies and produce one with negative frequencies.
+The projection $P$ then discards these newly created negative-frequency components.
+It is this act of "projecting away" part of the result that gives the operator a chance to have a non-trivial kernel or cokernel.
+If we simply considered the multiplication operator on the full space $L^2(S^1)$, its index would always be zero.
+The restriction to the Hardy space is the essential ingredient.
+
+From our continuous, non-vanishing function $\phi$ on the circle (the \textbf{symbol}), we construct the Toeplitz operator $T_\phi: H^2 \to H^2$.
+The Atiyah-Singer Index Theorem, in this specific context, makes a remarkable claim.
+
+\begin{theorem}[Index Theorem for Toeplitz Operators]
+Let $\phi$ be a continuous, non-vanishing function on the circle $S^1$. The associated Toeplitz operator $T_\phi$ is a Fredholm operator, and its analytical index is equal to the negative of the winding number of its symbol:
+\begin{equation}
+    \text{Index}(T_\phi) = -\text{wind}(\phi, 0)
+    \label{eq:toeplitz_index_theorem}
+\end{equation}
+\end{theorem}
+
+\begin{proof}[Sketch of Proof]
+    A full proof is beyond the scope of this introduction, but we can provide a compelling argument by considering the case where the symbol is a single Fourier mode, $\phi(z) = z^k$ for some integer $k$, where $z=e^{i\theta}$. The winding number of this symbol is exactly $k$. The theorem predicts an index of $-k$.
+    
+    The action of the operator on a basis function $e^{in\theta}$ (with $n \ge 0$) is $T_{z^k}(e^{in\theta}) = P(z^k e^{in\theta}) = P(e^{i(n+k)\theta})$.
+    
+    \textbf{Case 1: $k > 0$}.
+    The operator maps $e^{in\theta}$ to $e^{i(n+k)\theta}$. Since $n \ge 0$ and $k > 0$, the result $n+k$ is always non-negative, so the projection $P$ is trivial.
+    \begin{itemize}
+        \item \textbf{Kernel:} $T_{z^k}$ maps the basis $\{e^{i0\theta}, e^{i1\theta}, \dots\}$ to $\{e^{ik\theta}, e^{i(k+1)\theta}, \dots\}$. No non-zero function is mapped to zero. The kernel is trivial, $\dim(\ker T_{z^k})=0$.
+        \item \textbf{Cokernel:} The image of the operator is the subspace spanned by $\{e^{im\theta}\}_{m\ge k}$. The basis functions $\{e^{i0\theta}, e^{i1\theta}, \dots, e^{i(k-1)\theta}\}$ are missing from the image. There are $k$ such functions. The cokernel is therefore $k$-dimensional, $\dim(\text{coker} T_{z^k})=k$.
+    \end{itemize}
+    The index is $\text{Index}(T_{z^k}) = 0 - k = -k$. This matches the formula.
+    
+    \textbf{Case 2: $k < 0$}. Let $k = -j$ where $j > 0$.
+    The operator maps $e^{in\theta}$ to $P(e^{i(n-j)\theta})$.
+    \begin{itemize}
+        \item \textbf{Kernel:} The projection gives zero if the frequency is negative, i.e., $n-j < 0$. Since $n \ge 0$, this is true for $n = 0, 1, \dots, j-1$. There are $j$ such basis functions. The kernel is $j$-dimensional, $\dim(\ker T_{z^{-j}})=j$.
+        \item \textbf{Cokernel:} The operator maps the basis functions with $n \ge j$ to $e^{i(n-j)\theta}$, which generates all non-negative frequencies. The operator is surjective, so its image is all of $H^2$. The cokernel is trivial, $\dim(\text{coker} T_{z^{-j}})=0$.
+    \end{itemize}
+    The index is $\text{Index}(T_{z^{-j}}) = j - 0 = j = -k$. This again matches the formula.
+    The general proof relies on showing that the index is stable under deformations of the symbol $\phi$, and any symbol can be deformed into the simple form $z^k$ where $k$ is its winding number.
+\end{proof}
+
+This theorem is a bridge between two worlds.
+The left-hand side, the analytical index, is a property of an operator.
+To compute it, one must solve for the dimensions of the kernel and cokernel—a task of analysis.
+The right-hand side, the winding number, is a property of a path in the complex plane—a task of topology.
+The theorem guarantees that the "hard" analytical calculation must give the same integer as the "easy" topological one.
+The physical importance of this cannot be overstated.
+It means that a physical quantity, like the number of zero-energy states, can be determined purely by the topological properties of the system's parameters, making it robust against small perturbations.
+
+This result is the first step on a long and fruitful journey.
+We will spend much of this book exploring its vast generalizations and physical consequences.
+For now, we will turn to its first direct application in condensed matter physics: a simple one-dimensional model of a crystal that realizes this deep mathematical structure in a strikingly physical way.
+
+% \subsection*{Exercises}
+% \begin{exercise}[Index of a Dirac Operator]
+%     A simple model for a relativistic particle in one dimension is the Dirac operator on the circle, $D = -i\sigma_2 \frac{d}{d\theta} + m\sigma_1$, acting on two-component spinor functions $\psi(\theta) = (\psi_1, \psi_2)^T$. Here, $\sigma_i$ are the Pauli matrices. The operator acts on the full Hilbert space $L^2(S^1) \otimes \mathbb{C}^2$.
+    
+%     The free operator ($m=0$) has eigenvalues $\lambda_n = n$ for each integer $n \in \mathbb{Z}$, with both positive and negative values. This suggests a natural split of the Hilbert space into $H_{>0}$ (positive energy states) and $H_{<0}$ (negative energy states).
+    
+%     Explain how the mass term $m\sigma_1$ can be viewed as a symbol, and how the index of an operator constructed from $D$ relates to the physical picture of energy levels crossing zero.
+% \end{exercise}
+
+% \begin{solution}
+%     Let's analyze the operator in the Fourier basis (momentum space). The derivative becomes multiplication by the momentum $k$, where $k$ is an integer. The operator becomes a matrix for each $k$: $H(k) = k\sigma_2 + m\sigma_1 = \begin{pmatrix} 0 & -ik+m \\ ik+m & 0 \end{pmatrix}$.
+%     The eigenvalues of this matrix are $\lambda_\pm(k) = \pm\sqrt{k^2+m^2}$.
+    
+%     The structure mentioned in the text becomes clear here. The Hilbert space is split by the free Dirac operator $H_0(k) = k\sigma_2$. Its eigenvalues are $\pm k$, so we can define the "positive energy" space as the one spanned by all eigenvectors with eigenvalue $k>0$, and the "negative energy" space (the "Dirac sea") by those with $k<0$. The $k=0$ states are special.
+    
+%     The full operator $D$ can be thought of as an operator that maps the positive-energy subspace to the negative-energy subspace. More formally, we can construct a Fredholm operator whose index counts the net number of states that cross zero energy as we vary a parameter.
+    
+%     The symbol of our operator can be taken as the off-diagonal component of the matrix $H(k)$, which is $\phi(k) = ik+m$. As we treat the momentum $k$ as a continuous variable that parameterizes the circle (the Brillouin zone), the function $\phi(k)$ traces a path in the complex plane.
+    
+%     If $m>0$, the path is the vertical line $m+ik$. This path never encircles the origin. Its winding number is 0. Correspondingly, the energy eigenvalues $\pm\sqrt{k^2+m^2}$ are never zero. There are no zero-energy states, and the index is 0.
+    
+%     If we were to vary the mass $m$, driving it from positive to negative, the path $\phi(k)$ would pass through the origin at the instant $m=0$ for $k=0$. As $m$ becomes negative, the path is now on the left side of the imaginary axis and still does not encircle the origin. The winding number remains 0.
+    
+%     This simple Dirac operator does not have a non-trivial winding number. However, the structure is the key. In the next section, we will see a model (the SSH model) whose Hamiltonian in momentum space is of the form $H(k) = d_x(k)\sigma_1 + d_y(k)\sigma_2$. The symbol is the complex function $\phi(k) = d_x(k) + id_y(k)$. If the path traced by this symbol as $k$ goes around the circle encloses the origin, its winding number will be non-zero. The index theorem will then guarantee the existence of zero-energy states, which physically manifest as robust states localized at the edges of the material.
+% \end{solution}

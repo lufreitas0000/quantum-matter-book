@@ -1,0 +1,89 @@
+\section{Thouless Pumping and Adiabatic Transport}
+\label{sec:thouless_pumping}
+
+The bulk-boundary correspondence in the SSH model reveals a static consequence of bulk topology.
+We now ask a dynamic question: can the topology of the bulk manifest in a transport property?
+The physical process we imagine is taking a 1D insulating crystal and slowly, cyclically changing its internal structure over time.
+If the path traced by the system's parameters during this cycle is topologically non-trivial, we might expect a non-trivial physical outcome.
+This is precisely what happens.
+In a seminal work by David Thouless, it was shown that adiabatically cycling the parameters of a one-dimensional insulator leads to the transport of a perfectly quantized amount of charge across the system.
+This phenomenon is known as a \textbf{Thouless pump}.
+
+To construct such a pump, we generalize the SSH model.
+Let the momentum-space Hamiltonian $H(k)$ now depend on an additional, slowly varying parameter $\phi(t)$.
+A concrete realization is to make the hopping parameters themselves periodic functions of $\phi$, for instance: $v(\phi) = v_0 + \delta\cos(\phi)$ and $w(\phi) = w_0 - \delta\cos(\phi)$.
+A simpler model that captures the same physics is to introduce a phase shift into the momentum-space Hamiltonian:
+\begin{equation}
+    H(k, \phi) = (v + w \cos(k))\sigma_x + w \sin(k)\sigma_y + m(\phi)\sigma_z
+\end{equation}
+where we have added a staggered onsite potential $m(\phi)$ that we vary as our pump parameter, for example $m(\phi) = m_0 \cos(\phi)$.
+This turns our parameter space from a 1D circle (the Brillouin zone of momentum $k$) into a 2D surface—a torus $T^2$—parameterized by the coordinates $\lambda = (k, \phi)$.
+The map from this parameter space to the Hamiltonian, $\lambda \mapsto H(\lambda)$, has its own topological invariant: the \textbf{first Chern number}, $C_1$.
+
+To define this number, we must understand how the ground state wavefunction evolves under the adiabatic theorem.
+Let $|u(\lambda)\rangle$ be the instantaneous ground state eigenvector of $H(\lambda)$.
+If we vary the parameters $\lambda(t)$ slowly, the time-dependent Schrödinger equation is $i\partial_t |\Psi(t)\rangle = H(\lambda(t)) |\Psi(t)\rangle$.
+The adiabatic theorem states that if the system starts in the ground state $|u(\lambda(0))\rangle$, it will remain in the instantaneous ground state at all later times, up to a phase factor.
+Let's write the solution as $|\Psi(t)\rangle = e^{i\gamma(t)} |u(\lambda(t))\rangle$.
+Substituting this into the Schrödinger equation and projecting onto $\langle u(\lambda(t))|$ gives an equation for the phase $\gamma(t)$.
+The result is that the total phase accumulated has two parts: the familiar dynamical phase, and a crucial extra piece called the geometric phase or Berry phase.
+This geometric phase is determined by the path taken in parameter space.
+
+The object that governs this geometric phase is the \textbf{Berry connection}, a 1-form $A$ that lives on the parameter space.
+Its origin can be seen from the time evolution: the rate of change of the geometric phase is given by $i\langle u | \partial_t u \rangle$.
+Using the chain rule, we can write this as $i \langle u | \vec{\nabla}_\lambda u \rangle \cdot \frac{d\vec{\lambda}}{dt}$.
+This naturally defines the Berry connection 1-form. In our coordinates $\lambda=(k, \phi)$, it is $A = A_k dk + A_\phi d\phi$, where the components are:
+\begin{equation}
+    A_k = i \langle u(k,\phi) | \partial_k u(k,\phi) \rangle \quad \text{and} \quad A_\phi = i \langle u(k,\phi) | \partial_\phi u(k,\phi) \rangle
+\end{equation}
+The Berry connection is a gauge field, much like the vector potential in electromagnetism.
+Its "magnetic field," or curvature, is a 2-form $F = dA$ that measures the local twisting of the ground state manifold.
+The Chern number is the total "flux" of this Berry curvature integrated over the entire parameter space torus:
+\begin{equation}
+    C_1 = \frac{1}{2\pi} \int_{T^2} F = \frac{1}{2\pi} \int_0^{2\pi} \int_0^{2\pi} (\partial_k A_\phi - \partial_\phi A_k) \,dk\,d\phi
+\end{equation}
+Just as the winding number integral must yield an integer, this integral must also yield an integer.
+It is a true topological invariant of the map from the parameter torus to the space of Hamiltonians.
+
+The physical process is as follows.
+We prepare the system in its ground state and slowly vary the parameter $\phi$ from $0$ to $2\pi$.
+Thouless showed that the net charge $Q$ pumped across the system in one complete cycle is precisely quantized and given by this Chern number:
+\begin{equation}
+    Q = e \cdot C_1
+\end{equation}
+where $e$ is the elementary charge.
+
+\begin{figure}[htbp]
+    \centering
+    \input{chapter1/figures/tikz_thouless_pump.tex}
+    \caption{A schematic of a Thouless pump. As the external parameter $\phi$ is cycled from $0$ to $2\pi$, the potential (blue curve) shifts, causing the localized Wannier states (red clouds) of the occupied band to move rigidly across the lattice. After one full cycle, the potential returns to its original form, but the electronic charge has been transported by an integer number of unit cells, an integer given by the Chern number of the pump.}
+    \label{fig:thouless_pump}
+\end{figure}
+
+Like the index, the Chern number is an integer and is robust to any continuous deformation of the Hamiltonian that does not close the energy gap.
+This means the pumped charge is perfectly quantized and insensitive to noise or small imperfections in the system.
+This idea has been experimentally realized in optical lattices of ultra-cold atoms, where the parameters of the lattice potential can be controlled with high precision, allowing for the direct observation of quantized charge transport, one atom at a time.
+
+\subsection{Relation to Edge States and Spectral Flow}
+How is this quantized transport related to the edge states of the SSH model?
+The connection provides a beautiful physical picture of the pump.
+Consider a finite SSH chain in its topological phase.
+We saw it hosts zero-energy states localized at its left and right edges.
+Now, imagine the pumping cycle, where we vary the parameter $\phi$ from $0$ to $2\pi$.
+If we were to track the energy spectrum of the finite chain during this cycle, we would see something remarkable.
+The energy of the state localized on the left edge would move up from the valence band, cross the energy gap, and enter the conduction band.
+Simultaneously, a state from the conduction band would move down into the gap at the right edge and enter the valence band.
+This process, where states are systematically transferred from one band to another at the boundaries during an adiabatic cycle, is called \textbf{spectral flow}.
+
+This flow is the 1D analogue of a \textbf{chiral mode}.
+A chiral mode is one that propagates in only one direction.
+Here, the "motion" is not in space, but in energy.
+The state at the left edge only flows "up" in energy, while the state at the right edge only flows "down".
+After one full cycle, the spectrum of the Hamiltonian returns to its original state, but the occupation of the bands has changed.
+One state has been removed from the valence band at the left edge and one has been added at the right edge.
+To return the system to its initial electronic configuration, one electron must be moved from the left reservoir to the right reservoir.
+This transfer of a single electron across the entire system is the physical manifestation of the quantized pump.
+The Chern number $C_1=1$ of the bulk corresponds to a spectral flow that transports exactly one unit of charge across the system per cycle.
+This provides a deep link between the bulk topological invariant ($C_1$) and the dynamic behavior of the boundary states.
+This concludes our first exploration into the interplay of topology and physics.
+We have seen how the simple, robust notion of a winding number can explain the existence of protected edge states and quantized transport, laying the foundation for the more advanced geometric structures we will encounter in the chapters to come.

@@ -1,0 +1,120 @@
+\section{The Winding Number as a Topological Invariant}
+\label{sec:winding_number}
+
+Let us begin with a simple question.
+Consider a map from a circle to a circle.
+We can visualize this by imagining a circular rope and a circular pole.
+How many distinct ways can we wrap the rope around the pole?
+Figure \ref{fig:winding_examples} illustrates this idea for several integer winding numbers.
+
+\begin{figure}[htbp]
+    \centering
+    % Input the TikZ code from a separate file in the 'figures' subdirectory
+    \input{chapter1/figures/tikz_winding_examples.tex}
+    \caption{Three examples of paths in the plane, representing maps from a circle to a plane with a point removed at the origin $O$. The winding number $n$ counts the net number of times the path wraps counter-clockwise around the origin.}
+    \label{fig:winding_examples}
+\end{figure}
+
+Our intuition suggests a straightforward answer.
+We could not wrap it at all ($n=0$).
+We could wrap it once ($n=1$), or twice ($n=2$), or three times.
+We could also wrap it in the opposite direction, which we can denote by negative numbers.
+It seems that for any integer $n \in \mathbb{Z}$, we can define a distinct way of wrapping the rope around the pole $n$ times.
+The crucial insight is that we cannot smoothly transform a rope wrapped once into a rope wrapped twice without cutting it.
+The number of times the rope is wrapped around the pole is a robust quantity; it is a topological invariant.
+This integer is known as the \textbf{winding number}.
+
+Let's make this mathematically precise.
+A circle can be parameterized by an angle $\theta \in [0, 2\pi)$.
+A map from a circle to a circle can therefore be represented by a function $f: S^1 \to S^1$, which we can write as a function $f(\theta)$ that is periodic, $f(\theta + 2\pi) = f(\theta)$.
+Since the target space is also a circle, the value of the function, $f(\theta)$, can be thought of as a point on the unit circle in the complex plane, $e^{i\phi(\theta)}$.
+Thus, our map is specified by a continuous, periodic function $\phi(\theta)$ such that $\phi(2\pi) = \phi(0) + 2\pi n$ for some integer $n$.
+
+As we traverse the domain circle once (letting $\theta$ go from $0$ to $2\pi$), the function $f(\theta)$ traverses the target circle some integer number of times.
+This integer is the winding number, and it can be extracted by the following integral formula:
+\begin{equation}
+    n = \frac{1}{2\pi i} \oint \frac{f'(\theta)}{f(\theta)} \, d\theta
+    \label{eq:winding_number_integral}
+\end{equation}
+To understand this equation, let's represent our map as $f(\theta) = e^{i\phi(\theta)}$.
+The derivative is then $f'(\theta) = i \phi'(\theta) e^{i\phi(\theta)}$.
+Substituting this into the integral gives:
+\begin{equation}
+    n = \frac{1}{2\pi i} \oint \frac{i \phi'(\theta) e^{i\phi(\theta)}}{e^{i\phi(\theta)}} \, d\theta = \frac{1}{2\pi} \oint \phi'(\theta) \, d\theta = \frac{\phi(2\pi) - \phi(0)}{2\pi}
+\end{equation}
+This equation provides the story of the integral.
+It tells us that the winding number $n$ is simply the total change in the phase $\phi(\theta)$ as we go around the circle once, normalized by $2\pi$.
+Since the map must be continuous, the rope must meet up with itself after a full traversal of the pole.
+This means that the total change in phase must be an integer multiple of $2\pi$, forcing $n$ to be an integer.
+
+\subsection{The Winding Number as a 1-Form}
+\label{subsec:winding_1_form}
+
+There is a deeper, more geometric way to view the winding number that will be essential for the rest of this book.
+Let's consider the target space of our map.
+This is the unit circle, which lives in the plane $\mathbb{R}^2$.
+The map itself, $f(\theta)$, traces out a path in this plane.
+The winding number is non-zero only if this path encloses the origin.
+This suggests that the origin is a special, singular point.
+Let us consider the plane with the origin removed, a space we call the \textit{punctured plane}, $\mathbb{R}^2 \setminus \{0\}$.
+
+The integrand in our formula, up to a factor of $i$, is $\frac{1}{2\pi} \phi'(\theta) d\theta$.
+This is the pullback of a more fundamental object that lives on the punctured plane itself, the "angle 1-form".
+A 1-form is simply an object that can be integrated along a path.
+In Cartesian coordinates $(x,y)$, this 1-form is written as:
+\begin{equation}
+    \omega = \frac{1}{2\pi} \frac{-y\,dx + x\,dy}{x^2 + y^2}
+\end{equation}
+This expression may seem opaque, but it is precisely the object whose integral counts windings.
+If we substitute $x = r\cos\theta$ and $y=r\sin\theta$, a direct calculation shows that $\omega = \frac{1}{2\pi}d\theta$.
+The winding number of a closed path $\gamma$ is then given by the line integral:
+\begin{equation}
+    n = \oint_\gamma \omega
+\end{equation}
+This 1-form $\omega$ has a crucial property: it is \textit{closed}.
+This means its exterior derivative is zero, $d\omega = 0$.
+In the language of vector calculus, this is equivalent to saying that the corresponding vector field has zero curl.
+A closed form has a special property: its integral between two points is locally independent of the path taken.
+However, this is only true locally.
+On the punctured plane, $\omega$ is famously not \textit{exact}.
+An exact form is one that can be written as the total derivative of some global function, $\omega = dF$.
+If $\omega$ were exact, then by Stokes' theorem, its integral around any closed loop would be zero.
+But we know this is false; the integral of $\omega$ around the unit circle is 1.
+
+This is the essence of topology entering the calculus.
+The 1-form $\omega$ is closed but not exact on the punctured plane.
+The failure to be exact is a direct consequence of the "hole" at the origin.
+The winding number, as the integral of this form, is a topological probe that detects the presence of this hole.
+This idea---that closed but not exact forms (called non-trivial cohomology classes) can detect the topology of a space---is the central idea of de Rham cohomology, a topic we will develop more formally in the next chapter.
+
+\subsection*{Exercises}
+
+\begin{exercise}
+    In the complex plane, a point is described by $z = x+iy = re^{i\theta}$.
+    Show that the angle 1-form $\omega = d\theta$ can be written in terms of $z$ and its conjugate $\bar{z}$.
+    Use this to re-express the winding number integral as a contour integral in the complex plane.
+\end{exercise}
+
+\begin{solution}
+    The key lies in the complex logarithm.
+    For any complex number $z = re^{i\theta}$, we can write $\ln z = \ln r + i\theta$.
+    The angle $\theta$ we seek is the imaginary part of the logarithm, $\theta = \text{Im}(\ln z)$.
+    However, the logarithm is a multi-valued function.
+    If we circle the origin, $\theta$ increases by $2\pi$, so $\ln z$ increases by $2\pi i$.
+    To define a single-valued function, we must introduce a \textit{branch cut}, typically along the negative real axis, and define the principal value $\text{Arg}(z)$ which is restricted to the range $(-\pi, \pi]$.
+    This function is discontinuous across the branch cut.
+    Because of this discontinuity, there is no globally defined, single-valued function $F(z)$ on the punctured plane whose derivative is our angle 1-form.
+    This is precisely why the 1-form $\omega = d\theta$ is not exact.
+    However, the differential $d(\ln z)$ is a perfectly well-defined 1-form on the punctured plane.
+    
+    We start with $d(\ln z) = \frac{dz}{z} = \frac{dr}{r} + i\,d\theta$.
+    Similarly, for the complex conjugate $\bar{z} = re^{-i\theta}$, we have $d(\ln \bar{z}) = \frac{d\bar{z}}{\bar{z}} = \frac{dr}{r} - i\,d\theta$.
+    Subtracting the second equation from the first gives $\frac{dz}{z} - \frac{d\bar{z}}{\bar{z}} = 2i\,d\theta$.
+    Solving for $d\theta$, we find the expression for the angle 1-form: $d\theta = \frac{1}{2i} \left( \frac{dz}{z} - \frac{d\bar{z}}{\bar{z}} \right)$.
+    The winding number of a path $\gamma$ is given by $n = \frac{1}{2\pi} \oint_\gamma d\theta$.
+    Substituting our new expression gives $n = \frac{1}{2\pi} \oint_\gamma \frac{1}{2i} \left( \frac{dz}{z} - \frac{d\bar{z}}{\bar{z}} \right)$.
+    If the path $\gamma$ is on the unit circle, then $|z|^2 = z\bar{z} = 1$, which means $\bar{z} = 1/z$ and $d\bar{z} = -dz/z^2$.
+    Substituting this gives $\frac{d\bar{z}}{\bar{z}} = z \left( -\frac{dz}{z^2} \right) = -\frac{dz}{z}$.
+    The integral simplifies dramatically: $n = \frac{1}{2\pi} \oint_\gamma \frac{1}{2i} \left( \frac{dz}{z} - \left(-\frac{dz}{z}\right) \right) = \frac{1}{2\pi i} \oint_\gamma \frac{dz}{z}$.
+    This is the famous Cauchy integral formula for the winding number, which by the residue theorem evaluates to an integer $n$ that counts how many times the path $\gamma$ winds around the pole at $z=0$.
+\end{solution}
