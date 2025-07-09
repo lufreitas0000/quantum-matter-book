@@ -1,0 +1,167 @@
+% PREAMBLE FOR "Factorization Algebras, Geometry, and Categories for Quantum Matter"
+
+%------------------------------------------------------------------
+% Font and Encoding Setup (Requires XeLaTeX or LuaLaTeX)
+%------------------------------------------------------------------
+\usepackage{fontspec} % Allows loading of system fonts
+
+% --- Define the Body and Display Fonts ---
+% Assumes a 'fonts' folder in the project containing 'seguivt.ttf' and 'seguivd.ttf'.
+\setmainfont{seguivt.ttf}[
+    Path = ./fonts/,
+    Ligatures = TeX
+]
+\newfontfamily\displayfont{seguivd.ttf}[
+    Path = ./fonts/,
+    Ligatures = TeX
+]
+
+%------------------------------------------------------------------
+% Page Layout and Geometry
+%------------------------------------------------------------------
+\usepackage[a4paper, margin=1in]{geometry}
+\usepackage{setspace}
+\setstretch{1.4}
+
+%------------------------------------------------------------------
+% Header and Title Formatting
+%------------------------------------------------------------------
+\usepackage{titlesec}
+\titleformat{\part}{\normalfont\displayfont\bfseries\Huge}{\thepart}{1em}{}
+\titleformat{\chapter}[display]
+  {\normalfont\displayfont\bfseries\huge}
+  {\chaptertitlename\ \thechapter}
+  {20pt}
+  {\Huge}
+\titleformat{\section}
+  {\normalfont\displayfont\bfseries\Large}
+  {\thesection}
+  {1em}
+  {}
+\titleformat{\subsection}
+  {\normalfont\displayfont\bfseries\large}
+  {\thesubsection}
+  {1em}
+  {}
+\titleformat{\subsubsection}
+  {\normalfont\displayfont\bfseries}
+  {\thesubsubsection}
+  {1em}
+  {}
+
+%------------------------------------------------------------------
+% Core Mathematics and Physics Packages
+%------------------------------------------------------------------
+\usepackage{amsmath}
+\usepackage{amsthm}
+\usepackage{mathtools}
+\usepackage{unicode-math}
+\setmathfont{Latin Modern Math}
+
+\usepackage{physics}
+\usepackage{slashed}
+\usepackage{bm}
+
+%------------------------------------------------------------------
+% Graphics and Figures
+%------------------------------------------------------------------
+\usepackage{graphicx}
+\usepackage{xcolor}
+\usepackage{tikz}
+\usetikzlibrary{
+    arrows.meta,
+    calc,
+    positioning,
+    decorations.markings,
+    patterns,
+    quantikz,
+    shapes.geometric % *** ADDED THIS LIBRARY FOR ELLIPSE SHAPE ***
+}
+\definecolor{lightPink}{HTML}{F5A9B8}
+\definecolor{lightBlue}{HTML}{5BCEFA}
+
+\usepackage{caption}
+\usepackage{subcaption}
+
+%------------------------------------------------------------------
+% Tables and Lists
+%------------------------------------------------------------------
+\usepackage{booktabs}
+\usepackage{enumitem}
+
+%------------------------------------------------------------------
+% Referencing and Bibliography
+%------------------------------------------------------------------
+\usepackage[colorlinks=true, urlcolor=blue, linkcolor=black, citecolor=blue]{hyperref}
+\usepackage{cleveref}
+\usepackage[backend=biber, style=numeric-comp, sorting=none]{biblatex}
+\addbibresource{references.bib}
+
+%------------------------------------------------------------------
+% General Formatting and Utilities
+%------------------------------------------------------------------
+\usepackage{microtype}
+
+%------------------------------------------------------------------
+% Custom Theorem-like Environments (Updated with new styling)
+%------------------------------------------------------------------
+% Style for definitions and examples
+\theoremstyle{definition}
+\newtheorem{definition}{Definition}[chapter]
+\newtheorem{example}{Example}[chapter]
+
+% A new style for exercises with a bold label
+\newtheoremstyle{exercise_style}
+  {\topsep}   % Space above
+  {\topsep}   % Space below
+  {\normalfont} % Body font
+  {}          % Indent amount
+  {\bfseries} % Theorem head font
+  {.}         % Punctuation after theorem head
+  {.5em}      % Space after theorem head
+  {}          % Theorem head spec (can be left empty)
+\theoremstyle{exercise_style}
+\newtheorem{exercise}{Exercise}[section]
+
+% Style for theorems, lemmas, etc.
+\theoremstyle{plain}
+\newtheorem{theorem}{Theorem}[chapter]
+\newtheorem{lemma}[theorem]{Lemma}
+\newtheorem{proposition}[theorem]{Proposition}
+\newtheorem{corollary}[theorem]{Corollary}
+
+% Style for remarks
+\theoremstyle{remark}
+\newtheorem{remark}{Remark}[chapter]
+
+% Custom environment for solutions with smaller, single-spaced text
+\newenvironment{solution}{%
+  \par\addvspace{\topsep}%
+  \noindent\textbf{Solution. }%
+  \begingroup % Start a group to keep changes local
+  \small
+  \setstretch{1.0} % Set single spacing
+}{%
+  \qed\par\addvspace{\topsep}%
+  \endgroup % End the group, restoring font size and spacing
+}
+
+% Redefine the proof environment to match the solution style
+\renewenvironment{proof}[1][\proofname]{%
+  \par\addvspace{\topsep}%
+  \noindent\textbf{#1. }%
+  \begingroup % Start a group to keep changes local
+  \small
+  \setstretch{1.0} % Set single spacing
+}{%
+  \qed\par\addvspace{\topsep}%
+  \endgroup % End the group, restoring font size and spacing
+}
+
+
+%------------------------------------------------------------------
+% Book Information
+%------------------------------------------------------------------
+\title{Factorization Algebras, Geometry, and Categories for Quantum Matter}
+\author{An Expert Physicist and Master Educator}
+\date{\today}

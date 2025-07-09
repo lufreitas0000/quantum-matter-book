@@ -1,0 +1,39 @@
+\begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % The "pole" or origin
+        \fill[black] (0,0) circle (2pt) node[anchor=south west] {$O$};
+        % The path not enclosing the origin
+        \draw[->, thick, blue, decoration={markings, mark=at position 0.5 with {\arrow{>}}}, postaction={decorate}]
+            plot[smooth cycle, tension=0.8] coordinates {(1.5,0) (2,1.5) (1.5,2.5) (1,1.5)};
+    \end{tikzpicture}
+    \caption{$n=0$}
+    \label{fig:n0}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % The "pole" or origin
+        \fill[black] (0,0) circle (2pt) node[anchor=south west] {$O$};
+        % The path enclosing the origin once
+        \draw[->, thick, red, decoration={markings, mark=at position 0.25 with {\arrow{>}}}, 
+        postaction={decorate}]
+            (0,0) circle (1.5cm);
+    \end{tikzpicture}
+    \caption{$n=1$}
+    \label{fig:n1}
+\end{subfigure}
+\hfill
+\begin{subfigure}[b]{0.3\textwidth}
+    \centering
+    \begin{tikzpicture}[scale=0.8]
+        % The "pole" or origin
+        \fill[black] (0,0) circle (2pt) node[anchor=south west] {$O$};
+        % The path enclosing the origin twice
+        \draw[->, thick, green!60!black, decoration={markings, mark=at position 0.125 with {\arrow{>}}, mark=at position 0.625 with {\arrow{>}}}, postaction={decorate}]
+           plot[smooth, tension=0.9, samples=20, domain=0:360] ({\x}: {1 + 0.5*cos(2*\x)});
+    \end{tikzpicture}
+    \caption{$n=2$}
+    \label{fig:n2}
+\end{subfigure}

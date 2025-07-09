@@ -1,0 +1,134 @@
+% \begin{tikzpicture}[
+%     scale=1.2,
+%     site/.style={circle, fill=black!20, minimum size=3mm, inner sep=0pt},
+%     wannier/.style={ellipse, fill=red!30, opacity=0.6, minimum width=1.5cm, minimum height=0.8cm}
+% ]
+%     % Draw the lattice sites
+%     \foreach \i in {0,...,6} {
+%         \node[site] (S\i) at (\i*1.5, 0) {};
+%     }
+
+%     % Draw the potential and Wannier functions at different times
+    
+%     % t=0
+%     \node at (3, 1.8) {$\phi=0$};
+%     \draw[blue, thick] plot[smooth, domain=0:6.5] (\x, {0.5*cos(deg(2*\x*pi)) + 0.5});
+%     \foreach \i in {0,1,2,3} {
+%         \node[wannier] at (\i*3, 0.5) {};
+%     }
+    
+%     % Arrow
+%     \draw[->, very thick] (7, 0.5) -- (8, 0.5) node[midway, above] {Time};
+
+%     % t=T/2
+%     \node at (10.5, 1.8) {$\phi=\pi$};
+%     \begin{scope}[xshift=9cm]
+%         \foreach \i in {0,...,6} {
+%             \node[site] (S\i) at (\i*1.5, 0) {};
+%         }
+%         \draw[blue, thick] plot[smooth, domain=0:6.5] (\x, {0.5*cos(deg(2*\x*pi - pi)) + 0.5});
+%         \foreach \i in {0,1,2,3} {
+%             \node[wannier] at (\i*3+1.5, 0.5) {};
+%         }
+%     \end{scope}
+
+%     % Arrow
+%     \draw[->, very thick] (3, -1) -- (3, -2) node[midway, right] {Cycle};
+
+%     % t=T
+%     \node at (3, -4.2) {$\phi=2\pi$};
+%     \begin{scope}[yshift=-3.5cm]
+%         \foreach \i in {0,...,6} {
+%             \node[site] (S\i) at (\i*1.5, 0) {};
+%         }
+%         \draw[blue, thick] plot[smooth, domain=0:6.5] (\x, {0.5*cos(deg(2*\x*pi - 2*pi)) + 0.5});
+%         % Show the charge has been pumped by one unit cell
+%         \foreach \i in {1,2,3,4} {
+%             \node[wannier] at (\i*3, 0.5) {};
+%         }
+%     \end{scope}
+
+% \end{tikzpicture}
+
+\begin{tikzpicture}[
+    node distance=3cm % Vertical distance between figures
+]
+
+%----------------------------------------------------------------
+% STYLES
+%----------------------------------------------------------------
+\tikzset{
+    site/.style={
+        circle, fill=black!70, minimum size=4mm,
+        inner sep=0pt, draw=black, thick
+    },
+    % Wannier style with custom color and new width
+    wannier/.style={
+        fill=lightPink, % Use custom light pink color
+        opacity=0.6,
+        minimum width=1.8cm, % More localized as requested
+        minimum height=0.7cm
+    },
+    % Potential style with a darker version of the custom blue
+    potential/.style={
+        color=lightBlue!85!black, % Darker blue for visibility
+        %very thick,
+        line width=2.0pt,
+        smooth
+    },
+    % Arrow style with shorter tip
+    flow-arrow/.style={
+        -{Stealth[length=3mm, width=2.5mm]}, % Shorter arrow tip
+        ultra thick,
+        draw=black!80,
+        shorten >=4mm,
+        shorten <=4mm
+    },
+    state-label/.style={
+        font=\Large,
+        node distance=1cm
+    }
+}
+
+%----------------------------------------------------------------
+% MODULAR PIC
+%----------------------------------------------------------------
+\tikzset{
+  pics/pump state/.style 2 args={
+    code={
+      \def\phase{#1}
+      \def\chargeoffset{#2}
+      \foreach \i in {0,...,5} {
+        \node[site] (site-\i) at ({1.5*\i}, 0) {};
+      }
+      \draw[potential, samples=100, domain=-0.5:8]
+          plot (\x, {0.6 * cos(deg( (2*pi/3)*\x + \phase )) + 0.3});
+      \foreach \i in {0,1} {
+        \node[wannier, shape=ellipse] at ({3*\i + \chargeoffset}, 0) {};
+      }
+    }
+  }
+}
+
+%----------------------------------------------------------------
+% DRAW THE FIGURE (VERTICAL ALIGNMENT)
+%----------------------------------------------------------------
+% 1. Create anchor nodes for the layout.
+\node (state1) at (0,0) {};
+\node (state2) [below=of state1] {};
+\node (state3) [below=of state2] {};
+
+% 2. Place the `pic`s at the anchor nodes.
+\pic at (state1) {pump state={0}{0}};
+\pic at (state2) {pump state={pi}{1.5}};
+\pic at (state3) {pump state={2*pi}{3.0}};
+
+% 3. Add labels and arrows relative to the anchors.
+\node[state-label, left=of state1] {$\phi=0$};
+\node[state-label, left=of state2] {$\phi=\pi$};
+\node[state-label, left=of state3] {$\phi=2\pi$};
+
+\draw[flow-arrow] (state1) -- +(0,-2.5);
+\draw[flow-arrow] (state2) -- +(0,-2.5);
+
+\end{tikzpicture}

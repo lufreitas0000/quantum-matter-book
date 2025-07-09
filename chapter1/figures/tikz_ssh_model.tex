@@ -1,0 +1,50 @@
+\begin{tikzpicture}[
+    site/.style={circle, draw, fill=black!10, minimum size=4mm},
+    v_bond/.style={draw, thick},
+    w_bond/.style={draw, thick, double, double distance=1.2pt},
+    node distance=1cm  % Increased distance for clarity
+]
+    % (a) Trivial Phase (|v| > |w|) - Dimers are (A-B)
+    \node at (5, 1.5) {(a) Trivial Phase ($|v| > |w|$), wind=0};
+    % Place nodes
+    \node[site] (A0) at (0,0) {A};
+    \node[site, right=of A0] (B0) {B};
+    \node[site, right=of B0] (A1) {A};
+    \node[site, right=of A1] (B1) {B};
+    \node[site, right=of B1] (A2) {A};
+    \node[site, right=of A2] (B2) {B};
+
+    % Draw bonds
+    \draw[v_bond] (A0) -- (B0) node[midway, above] {$v$};
+    \draw[v_bond] (A1) -- (B1) node[midway, above] {$v$};
+    \draw[v_bond] (A2) -- (B2) node[midway, above] {$v$};
+    \draw[w_bond] (B0) -- (A1) node[midway, below] {$w$};
+    \draw[w_bond] (B1) -- (A2) node[midway, below] {$w$};
+
+    % Dashed lines for continuation
+    %\draw[w_bond, dashed] (B2) -- ++(2,0);
+    %\draw[w_bond, dashed] (A0) -- ++(-2,0);
+
+
+    % (b) Topological Phase (|w| > |v|) - Dimers are (B-A)
+    \node at (5, -1.5) {(b) Topological Phase ($|w| > |v|$), wind=1};
+    
+    \node[site, fill=red!30] (A0b) at (0, -3) {A};
+%    \node[site, fill=red!30] (B2b) at (8, -3) {B};
+    % Dashed lines for continuation
+%    \draw[v_bond, dashed] (B2b) -- ++(-2,0);
+%    \draw[v_bond, dashed] (A0b) -- ++(+2,0);
+    % Place nodes, with end nodes styled as edge states
+    \node[site, right=of A0b] (B0b) {B};
+    \node[site, right=of B0b] (A1b) {A};
+    \node[site, right=of A1b] (B1b) {B};
+    \node[site, right=of B1b] (A2b) {A};
+    \node[site, right=of A2b, fill=red!30] (B2b) {B};
+
+    % Draw bonds with the opposite dimerization
+ %   \draw[v_bond] (A0b) -- (B0b) node[midway, below] {$v$};
+    \draw[v_bond] (A1b) -- (B1b) node[midway, below] {$v$};
+    \draw[w_bond] (B0b) -- (A1b) node[midway, above] {$w$};
+    \draw[w_bond] (B1b) -- (A2b) node[midway, above] {$w$};
+
+\end{tikzpicture}

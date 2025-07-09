@@ -1,0 +1,80 @@
+\documentclass[12pt, openany]{book}
+
+% Load all packages and configurations from the preamble file
+\input{preamble.tex}
+
+%==================================================================
+% DOCUMENT BEGINS
+%==================================================================
+\begin{document}
+%\maketitle
+%\frontmatter
+\tableofcontents
+%\mainmatter
+
+%------------------------------------------------------------------
+% Introduction
+%------------------------------------------------------------------
+\input{introduction}
+
+%------------------------------------------------------------------
+% Part I: The Core Idea: Operators, Topology, and Physical Models
+%------------------------------------------------------------------
+ \part{The Core Idea: Operators, Topology, and Physical Models}
+\input{chapter1/chapter1.tex}  % Winding Numbers, Indices, and Topological Insulators
+\input{chapter2/chapter2.tex}  % Manifolds, Cohomology, and the Aharonov-Bohm Effect
+\input{chapter3/chapter3} % Connections, Curvature, and Gauge Theory
+% \input{chapter4} % The Hodge Theorem and Duality
+
+% %------------------------------------------------------------------
+% % Part II: Spin, Chirality, and Relativistic Fields
+% %------------------------------------------------------------------
+% \part{Spin, Chirality, and Relativistic Fields}
+% \input{chapter5} % Clifford Algebras, Spinors, and the Dirac Equation
+% \input{chapter6} % Spin Geometry and Gravity
+% \input{chapter7} % The Chiral Anomaly and the Family Index
+% \input{chapter8} % The Heat Kernel and Quantum Fluctuations
+
+% %------------------------------------------------------------------
+% % Part III: The Renormalization Group and Scale Invariance
+% %------------------------------------------------------------------
+% \part{The Renormalization Group and Scale Invariance}
+% \input{chapter9} % The Renormalization Group and Conformal Field Theory
+
+% %------------------------------------------------------------------
+% % Part IV: The Atiyah-Singer Theorem and Its Consequences
+% %------------------------------------------------------------------
+% \part{The Atiyah-Singer Theorem and Its Consequences}
+% \input{chapter10} % The Atiyah-Singer Index Theorem
+% \input{chapter11} % Geometric Applications and Gravitational Anomalies
+% \input{chapter12} % Seiberg-Witten Theory and Modern Gauge Theory
+
+% %------------------------------------------------------------------
+% % Part V: Symmetry, Topology, and Quantum Matter
+% %------------------------------------------------------------------
+% \part{Symmetry, Topology, and Quantum Matter}
+% \input{chapter13} % Equivariant Indices and Protected Phases
+% \input{chapter14} % Foundations of Topological Order
+% \input{chapter15} % Quantum Spin Liquids
+% \input{chapter16} % K-Theory and the Classification of Matter
+% \input{chapter17} % The APS Index and the Bulk-Boundary Correspondence
+
+% %------------------------------------------------------------------
+% % Part VI: Advanced Structures and Modern Frontiers
+% %------------------------------------------------------------------
+% \part{Advanced Structures and Modern Frontiers}
+% \input{chapter18} % Factorization Algebras and Conformal Field Theory
+% \input{chapter19} % Cobordism, TQFTs, and Invertible Phases
+% \input{chapter20} % Fracton Topological Order
+% \input{chapter21} % The Holographic Principle and AdS/CFT
+% \input{chapter22} % Noncommutative Geometry and D-Brane Charges
+% \input{chapter23} % A Final Synthesis: Duality, Geometry, and the Swampland
+
+% \appendix
+% % Appendices can be added here if needed
+
+% \backmatter
+%\printbibliography
+% \bibliography{references} % Assuming a references.bib file
+
+\end{document}
